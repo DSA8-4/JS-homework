@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원정보 관리 프로그램 - 등록</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script>
-    
-  </script>
-</head>
-<body>
-  <header>
-    <h1>회원정보 관리 프로그램</h1>
-  </header>
-  <nav>
-    <ul>
-      <li><a href="main.html">메인</a></li>
-      <li><a href="register.html">등록</a></li>
-      <li><a href="search.html">조회</a></li>
-      <li><a href="list.html">전체출력</a></li>
-    </ul>
-  </nav>
-  <main>
-    <h2>회원정보 등록</h2>
-    <form id="register-form">
-      <label for="name">이름:</label>
-      <input type="text" id="name" name="name" required>
-      
-      <label for="gender">성별:</label>
-      <select id="gender" name="gender" required>
-        <option value="MALE">남성</option>
-        <option value="FEMALE">여성</option>
-      </select>
-      
-      <label for="birthday">생년월일:</label>
-      <input type="date" id="birthday" name="birthday" required>
-      
-      <label for="email">이메일:</label>
-      <input type="email" id="email" name="email" required>
-      
-      <button type="submit">등록</button>
-    </form>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원정보 관리 프로그램 - 등록</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./register.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>회원정보 관리 프로그램</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="main.html">메인</a></li>
+        <li><a href="register.html">등록</a></li>
+        <li><a href="search.html">조회</a></li>
+        <li><a href="list.html">전체출력</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h2>회원정보 등록</h2>
+      <form id="register-form">
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="gender">성별:</label>
+        <select id="gender" name="gender" required>
+          <option value="MALE">남성</option>
+          <option value="FEMALE">여성</option>
+        </select>
+
+        <label for="birthday">생년월일:</label>
+        <input type="date" id="birthday" name="birthday" required />
+
+        <label for="email">이메일:</label>
+        <input type="email" id="email" name="email" required />
+
+        <button type="submit">등록</button>
+      </form>
+    </main>
+  </body>
 </html>
