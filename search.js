@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("search-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const userId = document.getElementById("search-id").value;
-    console.log("userId: ", userId);
     searchUser(userId);
   });
 });
@@ -19,15 +18,15 @@ function searchUser(userId) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      console.log("response: ", response);
       return response.text();
     })
     .then((data) => {
       if (data) {
         displayUserInfo(JSON.parse(data));
       } else {
-        const resultDiv = document.getElementById("search-result");
-        resultDiv.innerHTML = `<p style='text-align: center'>조회된 데이터가 없습니다.</p>`;
+        document.getElementById(
+          "search-result"
+        ).innerHTML = `<p style='text-align: center'>조회된 데이터가 없습니다.</p>`;
       }
     })
     .catch((error) => console.error("Error: ", error));

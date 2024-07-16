@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("search-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const userId = document.getElementById("search-id").value;
-    console.log(userId);
+
     fetch(`http://112.160.250.170/api/v1/users/${userId}`, {
       method: "GET",
       headers: {
@@ -15,16 +15,19 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        // console.log("response: ", response);
         return response.text();
       })
       .then((data) => {
-        const { id, name, gender, birthday, email } = JSON.parse(data);
-        document.getElementById("name").value = name;
-        document.getElementById("gender").value = gender;
-        document.getElementById("birthday").value = birthday;
-        document.getElementById("email").value = email;
-        editID = id;
+        if (data) {
+          const { id, name, gender, birthday, email } = JSON.parse(data);
+          document.getElementById("name").value = name;
+          document.getElementById("gender").value = gender;
+          document.getElementById("birthday").value = birthday;
+          document.getElementById("email").value = email;
+          editID = id;
+        } else {
+          alert("해당하는 Id가 존재하지 않습니다");
+        }
       })
       .catch((error) => console.error("Error: ", error));
   });
@@ -56,7 +59,7 @@ function updateUser(user) {
     alert("수정할 사용자의 ID를 조회하세요");
     return;
   }
-  console.log(user);
+
   fetch(`http://112.160.250.170/api/v1/users/${editID}`, {
     method: "PATCH",
     headers: {
