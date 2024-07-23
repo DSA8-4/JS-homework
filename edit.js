@@ -1,4 +1,3 @@
-let editID = -1;
 document.addEventListener("DOMContentLoaded", function () {
   // 여기에 초기화 코드를 작성합니다.
   document.getElementById("search-form").addEventListener("submit", (e) => {
@@ -11,20 +10,17 @@ document.addEventListener("DOMContentLoaded", function () {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.text();
-      })
-      .then((data) => {
-        if (data) {
-          const { id, name, gender, birthday, email } = JSON.parse(data);
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        const text = await response.text();
+        if (text) {
+          const data = JSON.parse(text);
+          const { id, name, gender, birthday, email } = data;
+          document.getElementById("id").value = id;
           document.getElementById("name").value = name;
           document.getElementById("gender").value = gender;
           document.getElementById("birthday").value = birthday;
           document.getElementById("email").value = email;
-          editID = id;
         } else {
           alert("해당하는 Id가 존재하지 않습니다");
         }
@@ -34,12 +30,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("edit-form").addEventListener("submit", (e) => {
     e.preventDefault();
+    const id = document.getElementById("id").value;
     const name = document.getElementById("name").value;
     const selectedGender = document.getElementById("gender").value;
     const birthday = document.getElementById("birthday").value;
     const email = document.getElementById("email").value;
 
     const edited = {
+      id,
       name,
       selectedGender,
       birthday,
@@ -51,22 +49,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("delete-member").addEventListener("click", (e) => {
     e.preventDefault();
+    deleteUser(document.getElementById("search-id").value);
   });
 });
 
 function updateUser(user) {
-  if (editID === -1) {
-    alert("수정할 사용자의 ID를 조회하세요");
-    return;
-  }
-
-  fetch(`http://112.160.250.170/api/v1/users/${editID}`, {
+  fetch(`http://112.160.250.170/api/v1/users/${user.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: editID,
+      id: user.id,
       name: user.name,
       gender: user.selectedGender,
       birthday: user.birthday,
@@ -74,20 +68,9 @@ function updateUser(user) {
     }),
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log("response: ", response);
+      if (!response.ok) throw new Error("Network response was not ok");
+      else alert("수정 성공");
       return response.text();
-    })
-    .then((data) => {
-      console.log(data);
-      // if (data) {
-      //   displayUserInfo(JSON.parse(data));
-      // } else {
-      //   const resultDiv = document.getElementById("search-result");
-      //   resultDiv.innerHTML = `<p style='text-align: center'>조회된 데이터가 없습니다.</p>`;
-      // }
     })
     .catch((error) => console.error("Error: ", error));
 }
@@ -103,16 +86,9 @@ function deleteUser(userId) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+
       console.log("response: ", response);
-      return response.text();
-    })
-    .then((data) => {
-      if (data) {
-        displayUserInfo(JSON.parse(data));
-      } else {
-        const resultDiv = document.getElementById("search-result");
-        resultDiv.innerHTML = `<p style='text-align: center'>조회된 데이터가 없습니다.</p>`;
-      }
+      alert("삭제 성공");
     })
     .catch((error) => console.error("Error: ", error));
 }

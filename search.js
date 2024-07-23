@@ -10,9 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function searchUser(userId) {
   fetch(`http://112.160.250.170/api/v1/users/${userId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
   })
     .then((response) => {
       if (!response.ok) {
